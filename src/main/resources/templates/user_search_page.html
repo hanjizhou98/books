@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>用户搜索</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+	</head>
+	<body>
+		<br>
+		<br>
+		<div class="ui one column centered grid">
+		  <div class="column">
+			  <div class="ui secondary  menu">
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  <!--					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+				  <a class="blue item active" th:href="@{/index}">
+					  图书管理系统
+				  </a>
+				  <a class="item active" th:href="@{/index}">
+					  图书首页
+				  </a>
+				  <a class="item active red" th:href="@{/user}" th:if="${session.isadmin==1}">
+					  人员管理
+				  </a>
+				  <a class="item active" th:href="@{/book}" th:if="${session.isadmin==1}">
+					  书籍管理
+				  </a>
+
+				  <div class="right menu">
+					  <div class="item">
+						  <form th:action="@{/user_search}" th:method="post">
+							  <div class="ui icon input">
+								  <input type="text" name="keywords" placeholder="搜索...">
+								  <button class="ui button" th:type="submit"><i class="search link icon"></i></button>
+							  </div>
+						  </form>
+					  </div>
+					  <a class="ui item active" th:text="'管理员: '+${session.username}" th:href="@{/user_profile(id=${session.id})}" th:if="${session.username ne null && session.isadmin==1}">
+					  </a>
+					  <a class="ui item active" th:text="${session.username}" th:href="@{/user_profile(id=${session.id})}" th:if="${session.username ne null && session.isadmin==0}">
+					  </a>
+					  <a class="ui item active" th:if="${session.username} ne null" th:href="@{/logout}">
+						  退出
+					  </a>
+					  <a class="ui item active" th:unless="${session.username} ne null" th:href="@{/tologin}">
+						  登录
+					  </a>
+					  <a class="ui item active" th:href="@{/toregister}" th:unless="${session.username} ne null">
+						  注册
+					  </a>
+					  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  </div>
+			  </div>
+		  </div>
+		  <div class="four column centered row">
+			  <div class="two wide column">
+				  <div class="ui horizontal statistics">
+					  <div class="statistic">
+						  <div class="value" >
+							  <label th:text="${num}"></label>
+						  </div>
+						  <div class="label">
+							  用户
+						  </div>
+					  </div>
+					  <div class="statistic">
+						  <div class="value" >
+							  <label th:text="${views}"></label>
+						  </div>
+						  <div class="label">
+							  浏览
+						  </div>
+					  </div>
+				  </div>
+			  </div>
+		    <div class="eleven wide column">
+				<table class="ui very table">
+					<thead>
+					<tr>
+						<th>姓名</th>
+						<th>性别</th>
+						<th>年龄</th>
+						<th>专业</th>
+						<th>是否为管理员</th>
+						<th>操作</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each="user,it:${users}">
+						<td th:text="${user.username}">John</td>
+						<td th:if="${user.sex==1}">男</td>
+						<td th:if="${user.sex==0}">女</td>
+						<td th:text="${user.age}">Approved</td>
+						<td th:text="${user.major}">None</td>
+						<td th:if="${user.isadmin == 1}">是</td>
+						<td th:if="${user.isadmin == 0}">否</td>
+						<td>
+							<button class="mini ui green basic button"><a th:href="@{/to_user_update(id=${user.id})}">更新</a></button>
+							<button class="mini ui red basic button"><a th:href="@{/user_delete(id=${user.id})}">删除</a></button>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		  </div>
+		</div>
+	</body>
+</html>

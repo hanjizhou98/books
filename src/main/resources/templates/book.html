@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>书籍</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+	</head>
+	<body>
+		<br>
+		<br>
+		<div class="ui one column centered grid">
+		  <div class="column">
+			  <div class="ui secondary  menu">
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  <!--					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+				  <a class="blue item active " th:href="@{/index}">
+					  图书管理系统
+				  </a>
+				  <a class="item active " th:href="@{/index}">
+					  图书首页
+				  </a>
+				  <a class="item active " th:href="@{/user}" th:if="${isadmin==1}">
+					  人员管理
+				  </a>
+				  <a class="item active red" th:href="@{/book}" th:if="${isadmin==1}">
+					  书籍管理
+				  </a>
+				  <a class="item active green" th:href="@{/to_add_book}" th:if="${isadmin==1}">
+					  添加书籍
+				  </a>
+
+				  <div class="right menu">
+					  <div class="item">
+						  <form th:action="@{/book_search}" th:method="post">
+							  <div class="ui icon input">
+								  <input type="text" name="keywords" placeholder="搜索...">
+								  <button class="ui button" th:type="submit"><i class="search link icon"></i></button>
+							  </div>
+						  </form>
+					  </div>
+					  <a class="ui item active" th:text="'管理员: '+${session.username}" th:href="@{/user_profile(id=${session.id})}" th:if="${session.username ne null && session.isadmin==1}">
+					  </a>
+					  <a class="ui item active" th:text="${session.username}" th:href="@{/user_profile(id=${session.id})}" th:if="${session.username ne null && session.isadmin==0}">
+					  </a>
+					  <a class="ui item active" th:if="${session.username} ne null" th:href="@{/logout}">
+						  退出
+					  </a>
+					  <a class="ui item active" th:unless="${session.username} ne null" th:href="@{/tologin}">
+						  登录
+					  </a>
+					  <a class="ui item active" th:href="@{/toregister}" th:unless="${session.username} ne null">
+						  注册
+					  </a>
+					  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  </div>
+			  </div>
+		  </div>
+		  <div class="four column centered row">
+			  <div class="two wide column">
+				  <div class="ui horizontal statistics">
+					  <div class="statistic">
+						  <div class="value" >
+							  <label th:text="${num}"></label>
+						  </div>
+						  <div class="label">
+							  种
+						  </div>
+					  </div>
+					  <div class="statistic">
+						  <div class="value">
+							  <label th:text="${views}"></label>
+						  </div>
+						  <div class="label">
+							  浏览
+						  </div>
+					  </div>
+					  <div class="statistic">
+						  <div class="value">
+							  <label th:text="${total}"></label>
+						  </div>
+						  <div class="label">
+							  本
+						  </div>
+					  </div>
+				  </div>
+			  </div>
+		    <div class="eleven wide column">
+				<table class="ui very table">
+					<thead>
+					<tr>
+						<th>书名</th>
+						<th>作者</th>
+						<th>出版时间</th>
+						<th>存量</th>
+						<th>类别</th>
+						<th>操作</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each="book,it:${books}">
+						<td th:text="${book.name}"></td>
+						<td th:text="${book.author}">m</td>
+						<td th:text="${book.publishTime}">Approved</td>
+						<td th:text="${book.num}">None</td>
+						<td th:text="${book.type}"></td>
+						<td>
+							<button class="mini ui green basic button"><a th:href="@{/to_book_update(id=${book.id})}">更新</a></button>
+							<button class="mini ui red basic button"><a th:href="@{/book_delete(id=${book.id})}">删除</a></button>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		  </div>
+		</div>
+	</body>
+</html>

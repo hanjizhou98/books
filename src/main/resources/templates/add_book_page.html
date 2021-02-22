@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>添加</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+	</head>
+	<body>
+		<br>
+		<br>
+		<br>
+		<div class="ui two column centered grid">
+		  <div class="column">
+			  <form class="ui form segment" th:action="@{/add_book}" th:method="post">
+			    <form class="ui form grid two">
+			      <div class="field">
+			        <label>书名</label>
+			        <input type="text" name="name" required="required">
+			      </div>
+			      <div class="field">
+			        <label>作者</label>
+			        <input type="text" name="author" required="required">
+			      </div>
+					<div class="field">
+						<label>数量</label>
+						<input type="number" name="num" required="required">
+					</div>
+					<div class="field">
+						<label>类型</label>
+						<input type="text" name="type" required="required">
+						<!--					  <label th:text="${msg2}"></label>-->
+					</div>
+					<div class="field">
+						<label>上架时间</label>
+						<input type="date" name="registerTime" required="required">
+						<!--					  <label th:text="${msg2}"></label>-->
+					</div>
+					<div class="field">
+						<label>发布时间</label>
+						<input type="date" name="publishTime" required="required">
+						<!--					  <label th:text="${msg2}"></label>-->
+					</div>
+					<button class="blue ui button" th:type="submit">提交</button>
+					<button class="red ui button" th:type="reset">重置</button>
+					<a class="ui button" th:href="@{/book}">返回</a>
+			    </form>
+			  </form>
+		  </div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	$('.ui.radio.checkbox')
+	  .checkbox();
+</script>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>个人</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+	</head>
+	<body>
+		<br>
+		<br>
+		<div class="ui one column centered grid">
+			<div class="column">
+				<div class="ui secondary  menu">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<!--					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+					<a class="blue item active" th:href="@{/index}">
+						图书管理系统
+					</a>
+					<a class="item active" th:href="@{/index}">
+						图书首页
+					</a>
+					<a class="item active" th:href="@{/user}" th:if="${session.isadmin==1}">
+						人员管理
+					</a>
+					<a class="item active" th:href="@{/book}" th:if="${session.isadmin==1}">
+						书籍管理
+					</a>
+					<a class="item active red" th:href="@{/user_profile(id=${session.id})}">
+						个人信息
+					</a>
+
+					<div class="right menu">
+						<div class="item">
+							<form th:action="@{/index_search}" th:method="post">
+								<div class="ui icon input">
+									<input type="text" name="keywords" placeholder="搜索...">
+									<button class="ui button" th:type="submit"><i class="search link icon"></i></button>
+								</div>
+							</form>
+						</div>
+						<a class="ui item active" th:text="'管理员: '+${session.username}" th:href="@{/user_profile(id=${session.id})}" th:if="${session.username ne null && session.isadmin==1}">
+						</a>
+						<a class="ui item active" th:text="${session.username}" th:href="@{/user_profile(id=${session.id})}" th:if="${session.username ne null && session.isadmin==0}">
+						</a>
+						<a class="ui item active" th:if="${session.username} ne null" th:href="@{/logout}">
+							退出
+						</a>
+						<a class="green ui item active" th:unless="${session.username} ne null" th:href="@{/tologin}">
+							登录
+						</a>
+						<a class="red ui item active" th:href="@{/toregister}" th:unless="${session.username} ne null">
+							注册
+						</a>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+				</div>
+			</div>
+			<div class="five column centered row">
+				<div class="two wide column">
+					<div class="ui horizontal statistics">
+						姓名:
+						<button class="blue ui button" th:text="${user.username}"></button>
+						性别:
+						<button class="red ui button" th:text="男" th:if="${user.sex==1}"></button>
+						<button class="red ui button" th:text="女" th:if="${user.sex==0}"></button>
+						年龄:
+						<button class="orange ui button" th:text="${user.age}"></button>
+						专业:
+						<button class="green ui button" th:text="${user.major}"></button>
+					</div>
+				</div>
+				<div class="eleven wide column">
+					<table class="ui very table">
+						<thead>
+						<tr>
+							<th>书名</th>
+							<th>作者</th>
+							<th>出版时间</th>
+							<th>类别</th>
+							<th>借出时间</th>
+							<th>归还时间</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr th:each="book,it:${books}">
+							<td th:text="${book.name}">John
+							</td>
+							<td th:text="${book.author}">m</td>
+							<td th:text="${book.publishTime}">Approved</td>
+							<td th:text="${book.type}"></td>
+							<td th:text="${book.borrowTime}"></td>
+							<td th:if="${book.isValid==1}">
+								<label th:text="未归还"></label>
+							</td>
+							<td th:if="${book.isValid!=1}">
+								<label th:text="${book.returnTime}"></label>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

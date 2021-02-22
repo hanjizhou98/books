@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzl.books.mapper.UserBorrowMapper">
+    <insert id="addUserBorrow" parameterType="com.wzl.books.entity.UserBorrow">
+        insert into user_borrow
+        values(#{id},#{uid},#{bid},#{isValid},#{borrowTime},#{returnTime})
+    </insert>
+
+    <select id="findUserBorrowByUidAndBid" parameterType="string" resultType="com.wzl.books.entity.UserBorrow">
+        select * from user_borrow
+        where uid=#{uid} and bid=#{bid}
+    </select>
+
+    <update id="updateUserBorrowByIdReturn">
+        update user_borrow set isValid = #{num},returnTime = #{returnTime}
+        where id=#{id}
+    </update>
+
+    <update id="updateUserBorrowByIdBorrow">
+        update user_borrow set isValid = #{num}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteUserBorrowById" parameterType="string">
+        delete from user_borrow where id=#{id}
+    </delete>
+
+    <delete id="deleteUserBorrowByBookId" parameterType="string">
+        delete from user_borrow where bid=#{id}
+    </delete>
+
+    <delete id="deleteUserBorrowByUserId" parameterType="string">
+        delete from user_borrow where uid=#{id}
+    </delete>
+</mapper>

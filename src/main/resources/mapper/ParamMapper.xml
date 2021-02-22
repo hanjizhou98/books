@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzl.books.mapper.ParamMapper">
+    <select id="findParamByName" parameterType="string" resultType="com.wzl.books.entity.Param">
+        select * from param where name = #{name}
+    </select>
+
+    <insert id="addParam" parameterType="com.wzl.books.entity.Param">
+        insert into param values
+        (#{id},#{name},#{num})
+    </insert>
+
+    <update id="updateParamById" parameterType="string">
+        update param set num = num+1 where id=#{id};
+    </update>
+
+</mapper>

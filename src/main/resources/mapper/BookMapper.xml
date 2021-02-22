@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzl.books.mapper.BookMapper">
+    <insert id="addBook" parameterType="com.wzl.books.entity.Book">
+        insert into book
+        values(#{id},#{name},
+            #{author},#{publishTime},
+            #{registerTime},#{num},#{type})
+    </insert>
+
+    <select id="findAllBooks" resultType="com.wzl.books.entity.Book">
+        select * from book
+    </select>
+
+    <delete id="deleteBookById" parameterType="string">
+        delete from book where id=#{id}
+    </delete>
+
+    <update id="updateBookNumById" parameterType="string">
+        update book set num = num-1 where id=#{id}
+    </update>
+
+    <select id="findBookById" parameterType="string" resultType="com.wzl.books.entity.Book">
+        select * from book where id=#{id}
+    </select>
+
+    <update id="updateBookById" parameterType="com.wzl.books.entity.Book">
+        update book
+        set name=#{name},author=#{author},num=#{num},publishTime=#{publishTime},registerTime=#{registerTime},type=#{type}
+        where id=#{id}
+    </update>
+
+    <select id="findBooksByKeywords" parameterType="string" resultType="com.wzl.books.entity.Book">
+        select * from book
+        where name like concat('%',#{keywords},'%') or author like concat('%',#{keywords},'%') or type like concat('%',#{keywords},'%')
+    </select>
+
+    <select id="findBookListOfUserByUserId" parameterType="string" resultType="com.wzl.books.entity.Profile">
+        SELECT b.*,ub.borrowTime,ub.returnTime,ub.isValid FROM book AS b RIGHT JOIN user_borrow AS ub ON b.id=ub.bid LEFT JOIN USER AS u ON u.id=ub.uid
+        WHERE u.id = #{id};
+    </select>
+
+</mapper>

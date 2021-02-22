@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzl.books.mapper.UserMapper">
+
+    <select id="findAllUsers" resultType="com.wzl.books.entity.User">
+        select * from user
+    </select>
+
+    <select id="findUserByUsername" resultType="com.wzl.books.entity.User">
+        select * from user where username = #{username}
+    </select>
+
+    <insert id="insertUser" parameterType="com.wzl.books.entity.User">
+        insert into user
+        values(#{id},#{username},#{password},#{age},#{sex},#{major},#{isadmin})
+    </insert>
+
+    <delete id="deleteUserById" parameterType="string">
+        delete from user where id=#{id}
+    </delete>
+
+    <select id="findUsersByKeywords" parameterType="string" resultType="com.wzl.books.entity.User">
+        select * from user
+        where username like concat('%',#{keywords},'%') or sex like concat('%',#{keywords},'%') or age like concat('%',#{keywords},'%') or major like concat('%',#{keywords},'%') or isadmin like concat('%',#{keywords},'%')
+    </select>
+
+    <select id="findUserById" parameterType="string" resultType="com.wzl.books.entity.User">
+        select * from user
+        where id=#{id}
+    </select>
+
+    <update id="updateUserById" parameterType="com.wzl.books.entity.User">
+        update user set username=#{username},sex=#{sex},age=#{age},major=#{major},isadmin=#{isadmin}
+        where id=#{id}
+    </update>
+
+</mapper>

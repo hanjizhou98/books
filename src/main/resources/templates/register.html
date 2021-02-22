@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>注册</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+	</head>
+	<body>
+		<br>
+		<br>
+		<br>
+		<div class="ui two column centered grid">
+		  <div class="column">
+			  <form class="ui form segment" th:action="@{/register}" th:method="post">
+			    <form class="ui form grid two">
+			      <div class="field">
+			        <label>用户名</label>
+			        <input type="text" name="username" placeholder="请输入用户名">
+					  <label th:text="${msg}"></label>
+			      </div>
+			      <div class="field">
+			        <label>密  码</label>
+			        <input type="password" name="password" placeholder="请输入密码">
+			      </div>
+				  <div class="field">
+				    <label>年  龄</label>
+				    <input type="number" name="age" placeholder="请输入年龄">
+				  </div>
+					<div class="field">
+						<label>专  业</label>
+						<input type="text" name="major" placeholder="请输入专业">
+					</div>
+
+				  <div class="field">
+				    <label>性  别</label>
+				    <div class="ui form">
+				      <div class="inline fields">
+				        <div class="field">
+				          <div class="ui radio checkbox">
+				            <input type="radio" name="sex" tabindex="0" class="hidden" value=1>
+				            <label>男</label>
+				          </div>
+				        </div>
+				        <div class="field">
+				          <div class="ui radio checkbox">
+				            <input type="radio" name="sex" tabindex="0" class="hidden" value=0>
+				            <label>女</label>
+				          </div>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+			      <button class="green ui button" type="submit">提交</button>
+				  <button class="red ui button" type="reset">重置</button>
+					<a class="ui button" th:type="button" th:href="@{/index}">返回</a>
+			    </form>
+			  </form>
+		  </div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	$('.ui.radio.checkbox').checkbox();
+</script>

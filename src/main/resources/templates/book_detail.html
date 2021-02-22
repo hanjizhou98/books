@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>书籍详情</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.css">
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.10/semantic.min.js"></script>
+	</head>
+	<body>
+		<br>
+		<br>
+		<div class="ui two column centered grid">
+		  <div class="column">
+			  <form class="ui form segment">
+			    <form class="ui form grid two">
+			      <div class="field">
+			        <label>名称</label>
+			        <input type="text" th:value="${book.name}">
+			      </div>
+			      <div class="field">
+			        <label>作者</label>
+			        <input type="text" th:value="${book.author}">
+			      </div>
+					<div class="field">
+						<label>数量</label>
+						<input type="number" th:value="${book.num}">
+					</div>
+					<div class="field">
+						<label>类别</label>
+						<input type="text" th:value="${book.type}">
+					</div>
+					<div class="field">
+						<label>出版日期</label>
+						<input type="date" th:value="${book.publishTime}">
+					</div>
+					<div class="field">
+						<label>上架时间</label>
+						<input type="date" th:value="${book.registerTime}">
+					</div>
+					<a class="green ui button" th:href="@{/borrow(id=${book.id})}" th:if="${isBorrow == 0 && username ne null}">借阅</a>
+					<a class="red ui button" th:href="@{/return_book(id=${book.id})}" th:if="${isBorrow == 1 && username ne null}">归还</a>
+					<a class="ui button" th:href="@{/index}">返回</a>
+			    </form>
+			  </form>
+		  </div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	$('.ui.radio.checkbox')
+	  .checkbox();
+</script>
